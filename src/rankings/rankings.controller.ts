@@ -5,7 +5,9 @@ import { RankingsService } from './rankings.service';
 
 @Controller('rankings')
 export class RankingsController {
-  constructor(private rankingService: RankingsService) {}
+  constructor(private rankingService: RankingsService) {
+    this.rankingService = rankingService;
+  }
 
   @EventPattern('proccess-ranking')
   async create(@Payload() processRankingDto: IRanking, @Ctx() context: RmqContext): Promise<void> {

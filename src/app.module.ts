@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { config } from 'dotenv';
-import { ClientProxyRabbitMq } from './proxyrmq/client-proxy';
 import { RankingsModule } from './rankings/rankings.module';
+import { ConfigModule } from '@nestjs/config';
 
 config();
 
@@ -13,7 +13,9 @@ config();
       useUnifiedTopology: true,
     }),
     RankingsModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
   ],
-  providers: [ClientProxyRabbitMq],
 })
 export class AppModule {}

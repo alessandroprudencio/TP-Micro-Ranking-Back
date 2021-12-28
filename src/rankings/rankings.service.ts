@@ -14,7 +14,10 @@ export class RankingsService {
     private readonly rankingModel: Model<RankingDocument>,
 
     private clientProxy: ClientProxyRabbitMq,
-  ) {}
+  ) {
+    this.rankingModel = rankingModel;
+    this.clientProxy = clientProxy;
+  }
 
   async proccessRanking(processRankingDto: IRanking): Promise<void> {
     await this.rankingModel.create(processRankingDto);
@@ -28,6 +31,8 @@ export class RankingsService {
     const positionsRankings = [...allPlayersScore]
       .sort((a, b) => b.score - a.score)
       .map((e, i) => ({ positionRanking: i + 1, ...e }));
+
+    console.log('positionsRankings=>', positionsRankings);
 
     this.clientRabbitMQAdmin.emit('update-positions-rankings', positionsRankings);
   }
