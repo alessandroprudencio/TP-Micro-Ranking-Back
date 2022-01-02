@@ -6,10 +6,8 @@ RUN yarn global add @nestjs/cli
 
 WORKDIR /usr/tennis-player/tp-micro-ranking
 
-COPY . .
+COPY package*.json ./
 
 RUN yarn
 
-RUN yarn run build
-
-CMD ["yarn", "run", "start:dev"]   
+COPY . .
